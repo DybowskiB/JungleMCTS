@@ -122,8 +122,8 @@ namespace JungleMCTS.GameBoard
             Pieces[8, 6] = new Tiger(PlayerIdEnum.SecondPlayer);
 
             // Cheetah positions
-            Pieces[2, 4] = new Cheetah(PlayerIdEnum.FirstPlayer);
-            Pieces[6, 2] = new Cheetah(PlayerIdEnum.SecondPlayer);
+            Pieces[2, 4] = new Panther(PlayerIdEnum.FirstPlayer);
+            Pieces[6, 2] = new Panther(PlayerIdEnum.SecondPlayer);
 
             // Wolf positions
             Pieces[2, 2] = new Wolf(PlayerIdEnum.FirstPlayer);
@@ -163,7 +163,7 @@ namespace JungleMCTS.GameBoard
 
             Fields[8, 2] = new Trap(PlayerIdEnum.SecondPlayer);
             Fields[8, 4] = new Trap(PlayerIdEnum.SecondPlayer);
-            Fields[8, 3] = new Trap(PlayerIdEnum.SecondPlayer);
+            Fields[7, 3] = new Trap(PlayerIdEnum.SecondPlayer);
 
             // Lake positions
             CreateLake(3, 1);

@@ -32,7 +32,7 @@ namespace JungleMCTS.Tests
             Cat cat = new(Enums.PlayerIdEnum.FirstPlayer);
             Dog dog = new(Enums.PlayerIdEnum.FirstPlayer);
             Wolf wolf = new(Enums.PlayerIdEnum.FirstPlayer);
-            Cheetah cheetah = new(Enums.PlayerIdEnum.FirstPlayer);
+            Panther cheetah = new(Enums.PlayerIdEnum.FirstPlayer);
             Tiger tiger = new(Enums.PlayerIdEnum.FirstPlayer);
             Lion lion = new(Enums.PlayerIdEnum.FirstPlayer);
             Elephant elephant = new(Enums.PlayerIdEnum.FirstPlayer);
@@ -811,7 +811,7 @@ namespace JungleMCTS.Tests
             Cat cat1 = new(Enums.PlayerIdEnum.FirstPlayer);
             Dog dog1 = new(Enums.PlayerIdEnum.FirstPlayer);
             Wolf wolf1 = new(Enums.PlayerIdEnum.FirstPlayer);
-            Cheetah cheetah1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Panther cheetah1 = new(Enums.PlayerIdEnum.FirstPlayer);
             Tiger tiger1 = new(Enums.PlayerIdEnum.FirstPlayer);
             Lion lion1 = new(Enums.PlayerIdEnum.FirstPlayer);
             Elephant elephant1 = new(Enums.PlayerIdEnum.FirstPlayer);
@@ -821,7 +821,7 @@ namespace JungleMCTS.Tests
             Cat cat2 = new(Enums.PlayerIdEnum.SecondPlayer);
             Dog dog2 = new(Enums.PlayerIdEnum.SecondPlayer);
             Wolf wolf2 = new(Enums.PlayerIdEnum.SecondPlayer);
-            Cheetah cheetah2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Panther cheetah2 = new(Enums.PlayerIdEnum.SecondPlayer);
             Tiger tiger2 = new(Enums.PlayerIdEnum.SecondPlayer);
             Lion lion2 = new(Enums.PlayerIdEnum.SecondPlayer);
             Elephant elephant2 = new(Enums.PlayerIdEnum.SecondPlayer);
