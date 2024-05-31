@@ -1,7 +1,7 @@
 ﻿using JungleMCTS.Enums;
 using JungleMCTS.GameBoard;
 
-namespace JungleMCTS.Players.AutoPlayers
+namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
 {
     public class ReflexiveMctsPlayer : AutoPlayer
     {

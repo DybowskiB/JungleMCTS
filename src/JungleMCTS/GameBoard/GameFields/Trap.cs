@@ -14,6 +14,9 @@ namespace JungleMCTS.GameBoard.GameFields
             PlayerIdEnum = playerIdEnum;
         }
 
+        public override object Clone() => new Trap(PlayerIdEnum);
+
+
         // Movement
         public override bool CanContain(Piece piece) => piece.CanMoveTo(this);
 

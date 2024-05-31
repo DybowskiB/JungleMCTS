@@ -1,12 +1,15 @@
 ﻿using JungleMCTS.GameBoard.GameFields;
 using JungleMCTS.Enums;
 using JungleMCTS.GameBoard;
+using JungleMCTS.GameBoard.Controllers;
 
 namespace JungleMCTS.GamePiece.Pieces
 {
     public class Mouse : SwimmingPiece
     {
         public Mouse(PlayerIdEnum playerIdEnum) : base(1, playerIdEnum) { }
+
+        public override object Clone() => new Mouse(PlayerIdEnum);
 
 
         // Movement

@@ -4,8 +4,10 @@ using JungleMCTS.GamePiece.Pieces;
 
 namespace JungleMCTS.GameBoard
 {
-    public abstract class GameField
+    public abstract class GameField : ICloneable
     {
+        public abstract object Clone();
+
         // Movement
         public abstract bool CanContain(Piece piece);
 

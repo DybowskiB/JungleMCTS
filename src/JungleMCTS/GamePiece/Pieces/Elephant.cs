@@ -2,12 +2,15 @@
 using JungleMCTS.Enums;
 using JungleMCTS.Exceptions;
 using JungleMCTS.GameBoard;
+using JungleMCTS.GameBoard.Controllers;
 
 namespace JungleMCTS.GamePiece.Pieces
 {
     public class Elephant : Piece
     {
         public Elephant(PlayerIdEnum playerIdEnum) : base(8, playerIdEnum) { }
+
+        public override object Clone() => new Elephant(PlayerIdEnum);
 
 
         // Movement

@@ -7,6 +7,9 @@ namespace JungleMCTS.GameBoard.GameFields
     {
         public DefaultField() { }
 
+        public override object Clone() => new DefaultField();
+
+
         // Movement
         public override bool CanContain(Piece piece) => true;
 

@@ -1,6 +1,7 @@
 ﻿using JungleMCTS.GamePiece.Pieces;
 using JungleMCTS.GamePiece;
 using JungleMCTS.GameBoard;
+using JungleMCTS.GameBoard.Controllers;
 
 namespace JungleMCTS.Tests
 {
@@ -16,6 +17,15 @@ namespace JungleMCTS.Tests
         {
             // Board board
             Board board = new();
+
+            // Clear board from pieces
+            for (int x = 0; x < Board.BoardLength; ++x)
+            {
+                for (int y = 0; y < Board.BoardWidth; ++y)
+                {
+                    board.Pieces[x, y] = null;
+                }
+            }
 
             // Player pieces
             Mouse mouse = new(Enums.PlayerIdEnum.FirstPlayer);
@@ -41,7 +51,7 @@ namespace JungleMCTS.Tests
 
             // Position = (1, 1)
             currentPosition = new(1, 1);
-            expectedPossiblePositions = 
+            expectedPossiblePositions =
                 [
                     new Position(1, 0),
                     new Position(2, 1),
@@ -50,7 +60,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -65,7 +78,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -80,7 +96,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -95,7 +114,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -113,7 +135,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -126,7 +151,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -139,7 +167,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -152,7 +183,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -171,7 +205,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveAllowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -185,7 +222,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveAllowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -198,7 +238,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveAllowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -208,7 +251,7 @@ namespace JungleMCTS.Tests
             //
 
             List<Piece> nearOwnCaveDisallowedPieces = [wolf, cheetah, tiger, lion, elephant];
-            
+
             // Position = (0, 1)
             currentPosition = new(0, 1);
             // { mouse, cat, dog }
@@ -220,7 +263,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveAllowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
             // { wolf, cheetah, tiger, lion, elephant } 
@@ -231,7 +277,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveDisallowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -247,7 +296,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveAllowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
             // { wolf, cheetah, tiger, lion, elephant } 
@@ -259,7 +311,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveDisallowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -275,7 +330,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveAllowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
             // { wolf, cheetah, tiger, lion, elephant } 
@@ -286,7 +344,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in nearOwnCaveDisallowedPieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -303,7 +364,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -318,7 +382,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -332,7 +399,10 @@ namespace JungleMCTS.Tests
                 ];
             foreach (var piece in player1Pieces)
             {
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -349,7 +419,7 @@ namespace JungleMCTS.Tests
             foreach (var piece in swimmingPieces)
             {
                 // Top edge
-                for(int x = 3; x < 6; ++x)
+                for (int x = 3; x < 6; ++x)
                 {
                     currentPosition = new Position(x, 0);
                     expectedPossiblePositions =
@@ -358,7 +428,10 @@ namespace JungleMCTS.Tests
                             new Position(x + 1, 0),
                             new Position(x, 1),
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -373,7 +446,10 @@ namespace JungleMCTS.Tests
                             new Position(x, 2),
                             new Position(x, 4)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -387,7 +463,10 @@ namespace JungleMCTS.Tests
                             new Position(x + 1, 6),
                             new Position(x, 5),
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -402,7 +481,10 @@ namespace JungleMCTS.Tests
                             new Position(1, y),
                             new Position(3, y)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -417,7 +499,10 @@ namespace JungleMCTS.Tests
                             new Position(5, y),
                             new Position(7, y)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
             }
@@ -438,7 +523,10 @@ namespace JungleMCTS.Tests
                             new Position(x + 1, 0),
                             new Position(x, 3),
                         ];
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = cheetah;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, cheetah);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -453,7 +541,10 @@ namespace JungleMCTS.Tests
                             new Position(x, 0),
                             new Position(x, 6)
                     ];
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = cheetah;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, cheetah);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -467,7 +558,10 @@ namespace JungleMCTS.Tests
                             new Position(x + 1, 6),
                             new Position(x, 3),
                         ];
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = cheetah;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, cheetah);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -482,7 +576,10 @@ namespace JungleMCTS.Tests
                             new Position(2, y + 1),
                             new Position(1, y)
                     ];
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = cheetah;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, cheetah);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -496,7 +593,10 @@ namespace JungleMCTS.Tests
                             new Position(6, y + 1),
                             new Position(7, y)
                     ];
+                var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                board.Pieces[currentPosition.X, currentPosition.Y] = cheetah;
                 var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, cheetah);
+                board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                 CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
             }
 
@@ -519,7 +619,10 @@ namespace JungleMCTS.Tests
                             new Position(x + 1, 0),
                             new Position(x, 3)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -534,7 +637,10 @@ namespace JungleMCTS.Tests
                             new Position(x, 0),
                             new Position(x, 6)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -548,7 +654,10 @@ namespace JungleMCTS.Tests
                             new Position(x + 1, 6),
                             new Position(x, 3)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -563,7 +672,10 @@ namespace JungleMCTS.Tests
                             new Position(1, y),
                             new Position(6, y)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -578,7 +690,10 @@ namespace JungleMCTS.Tests
                             new Position(2, y),
                             new Position(7, y)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
             }
@@ -600,7 +715,10 @@ namespace JungleMCTS.Tests
                             new Position(x - 1, 0),
                             new Position(x + 1, 0)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -613,7 +731,10 @@ namespace JungleMCTS.Tests
                             new Position(x - 1, 3),
                             new Position(x + 1, 3)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -626,7 +747,10 @@ namespace JungleMCTS.Tests
                             new Position(x - 1, 6),
                             new Position(x + 1, 6)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -640,7 +764,10 @@ namespace JungleMCTS.Tests
                             new Position(2, y + 1),
                             new Position(1, y)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
 
@@ -654,11 +781,100 @@ namespace JungleMCTS.Tests
                             new Position(6, y + 1),
                             new Position(7, y)
                         ];
+                    var tempPiece = board.Pieces[currentPosition.X, currentPosition.Y];
+                    board.Pieces[currentPosition.X, currentPosition.Y] = piece;
                     var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, piece);
+                    board.Pieces[currentPosition.X, currentPosition.Y] = tempPiece;
                     CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
                 }
             }
 
+        }
+
+        [Test]
+        public void ShouldHaveNoPossibleMoves()
+        {
+            // Board board
+            Board board = new();
+
+            // Clear board from pieces
+            for (int x = 0; x < Board.BoardLength; ++x)
+            {
+                for (int y = 0; y < Board.BoardWidth; ++y)
+                {
+                    board.Pieces[x, y] = null;
+                }
+            }
+
+            // Player 1 pieces
+            Mouse mouse1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Cat cat1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Dog dog1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Wolf wolf1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Cheetah cheetah1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Tiger tiger1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Lion lion1 = new(Enums.PlayerIdEnum.FirstPlayer);
+            Elephant elephant1 = new(Enums.PlayerIdEnum.FirstPlayer);
+
+            // Player 2 pieces
+            Mouse mouse2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Cat cat2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Dog dog2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Wolf wolf2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Cheetah cheetah2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Tiger tiger2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Lion lion2 = new(Enums.PlayerIdEnum.SecondPlayer);
+            Elephant elephant2 = new(Enums.PlayerIdEnum.SecondPlayer);
+
+            // Lists of pieces
+            List<Piece> player1Pieces = [mouse1, cat1, dog1, wolf1, cheetah1, tiger1, lion1, elephant1];
+            List<Piece> player2Pieces = [mouse2, cat2, dog2, wolf2, cheetah2, tiger2, lion2, elephant2];
+
+            // Positions
+            List<Position> expectedPossiblePositions = [];
+            List<Position> currentPositions =
+                [
+                    new Position(1, 1),
+                    new Position(1, 5),
+                    new Position(7, 1),
+                    new Position(7, 5)
+                ];
+
+
+            // Test - surrounded by friendly pieces
+            foreach (var currentPosition in currentPositions)
+            {
+                for (int i = 0; i < player1Pieces.Count; ++i)
+                {
+                    board.Pieces[currentPosition.X, currentPosition.Y] = player1Pieces[i];
+                    board.Pieces[currentPosition.X + 1, currentPosition.Y] = player1Pieces[i];
+                    board.Pieces[currentPosition.X - 1, currentPosition.Y] = player1Pieces[i];
+                    board.Pieces[currentPosition.X, currentPosition.Y + 1] = player1Pieces[i];
+                    board.Pieces[currentPosition.X, currentPosition.Y - 1] = player1Pieces[i];
+                    var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, player1Pieces[i]);
+                    CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
+                }
+            }
+
+            // Test - surrounded by enemies
+            foreach (var currentPosition in currentPositions)
+            {
+                for (int i = 0; i < player1Pieces.Count; ++i)
+                {
+                    for (int j = i + 1; j < player1Pieces.Count; ++j)
+                    {
+                        // Case when mouse attacks elephants
+                        if (i == 0 && j == player1Pieces.Count - 1) continue;
+                        board.Pieces[currentPosition.X, currentPosition.Y] = player1Pieces[i];
+                        board.Pieces[currentPosition.X + 1, currentPosition.Y] = player2Pieces[j];
+                        board.Pieces[currentPosition.X - 1, currentPosition.Y] = player2Pieces[j];
+                        board.Pieces[currentPosition.X, currentPosition.Y + 1] = player2Pieces[j];
+                        board.Pieces[currentPosition.X, currentPosition.Y - 1] = player2Pieces[j];
+                        var possiblePositions = MoveController.GetPossiblePositions(currentPosition, board, player1Pieces[i]);
+                        CollectionAssert.AreEquivalent(expectedPossiblePositions, possiblePositions);
+                    }
+                }
+            }
         }
     }
 }

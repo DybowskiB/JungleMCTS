@@ -14,6 +14,9 @@ namespace JungleMCTS.GameBoard.GameFields
             PlayerIdEnum = playerIdEnum;
         }
 
+        public override object Clone() => new Cave(PlayerIdEnum);
+
+
         // Movement
         public override bool CanContain(Piece piece) => PlayerIdEnum != piece.PlayerIdEnum;
 
@@ -34,6 +37,5 @@ namespace JungleMCTS.GameBoard.GameFields
 
         public override int GetAttackerStrengthBasedOnFields(Wolf attacker, Lake attackerField)
             => throw new InvalidGameStateException("Cannot find strength for wolf attack from lake to cave, because there is no such move possible.");
-
     }
 }

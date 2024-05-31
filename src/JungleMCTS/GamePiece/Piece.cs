@@ -1,12 +1,11 @@
 ﻿using JungleMCTS.GameBoard.GameFields;
 using JungleMCTS.Enums;
-using JungleMCTS.Exceptions;
 using JungleMCTS.GameBoard;
 using JungleMCTS.GamePiece.Pieces;
 
 namespace JungleMCTS.GamePiece
 {
-    public abstract class Piece
+    public abstract class Piece : ICloneable
     {
         public PlayerIdEnum PlayerIdEnum { get; set; }
 
@@ -17,6 +16,8 @@ namespace JungleMCTS.GamePiece
             DefaultStrength = initialStrength;
             PlayerIdEnum = playerIdEnum;
         }
+
+        public abstract object Clone();
 
 
         // Movement

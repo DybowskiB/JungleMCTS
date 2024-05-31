@@ -5,6 +5,8 @@
         None = 0,
         FirstPlayerWins = 1,
         SecondPlayerWins = 2,
-        Draw = 3
+        DrawBecauseOfNotCapturing = 3,
+        DrawBecauseOfSamePositions = 4,
+        Draw = 5
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace JungleMCTS.GameBoard
 {
-    public class Board
+    public class Board : ICloneable
     {
         private readonly int _maxMoveWithoutCapturing = 30;
         private readonly int _maxPositionCount = 3;
@@ -20,7 +20,7 @@ namespace JungleMCTS.GameBoard
 
         public Piece?[,] Pieces { get; } = new Piece?[BoardLength, BoardWidth];
 
-        public GameField[,] Fields { get; } = new GameField[BoardLength, BoardWidth];
+        public GameField?[,] Fields { get; } = new GameField?[BoardLength, BoardWidth];
 
 
         public Board()
@@ -31,6 +31,44 @@ namespace JungleMCTS.GameBoard
         }
 
 
+        public object Clone()
+        {
+            var clonedBoard = new Board
+            {
+                _movesWithoutCapturing = _movesWithoutCapturing
+            };
+
+            // Cloning Pieces
+            for (int i = 0; i < BoardLength; i++)
+            {
+                for (int j = 0; j < BoardWidth; j++)
+                {
+                    if (Pieces[i, j] != null)
+                    {
+                        clonedBoard.Pieces[i, j] = Pieces[i, j] is not null ? 
+                            (Piece)Pieces[i, j]!.Clone() : null;
+                    }
+                }
+            }
+
+            // Cloning fields
+            for (int i = 0; i < BoardLength; i++)
+            {
+                for (int j = 0; j < BoardWidth; j++)
+                {
+                    clonedBoard.Fields[i, j] = (GameField)Fields[i, j]!.Clone();
+                }
+            }
+
+            // Cloning position dictionary
+            foreach (var kvp in _positionDictionary)
+            {
+                clonedBoard._positionDictionary[kvp.Key] = kvp.Value;
+            }
+
+            return clonedBoard;
+        }
+
         public GameResult GetGameResult()
         {
             RemovePiecesSwimmingLong();
@@ -40,10 +78,10 @@ namespace JungleMCTS.GameBoard
                 return GameResult.FirstPlayerWins;
             if (Pieces[8, 3] != null)
                 return GameResult.SecondPlayerWins;
-            if (_movesWithoutCapturing == _maxMoveWithoutCapturing)
-                return GameResult.Draw;
+            if (_movesWithoutCapturing >= _maxMoveWithoutCapturing)
+                return GameResult.DrawBecauseOfNotCapturing;
             if (_positionDictionary[positionKey] >= _maxPositionCount)
-                return GameResult.Draw;
+                return GameResult.DrawBecauseOfSamePositions;
             return GameResult.None;
         }
 
@@ -181,6 +219,7 @@ namespace JungleMCTS.GameBoard
             }
             _positionDictionary.Add(positionKey, 0);
         }
+
 
         private static string GetPositionKey(Piece?[,] pieces)
         {

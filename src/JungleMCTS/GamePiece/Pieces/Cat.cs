@@ -2,12 +2,15 @@
 using JungleMCTS.Enums;
 using JungleMCTS.Exceptions;
 using JungleMCTS.GameBoard;
+using JungleMCTS.GameBoard.Controllers;
 
 namespace JungleMCTS.GamePiece.Pieces
 {
     public class Cat : Piece
     {
         public Cat(PlayerIdEnum playerIdEnum) : base(2, playerIdEnum) { }
+
+        public override object Clone() => new Cat(PlayerIdEnum);
 
 
         // Movement

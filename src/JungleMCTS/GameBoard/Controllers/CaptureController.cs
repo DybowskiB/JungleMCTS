@@ -2,7 +2,7 @@
 using JungleMCTS.GamePiece;
 using JungleMCTS.GamePiece.Pieces;
 
-namespace JungleMCTS.GameBoard
+namespace JungleMCTS.GameBoard.Controllers
 {
     public static class CaptureController
     {

@@ -1,4 +1,4 @@
-using JungleMCTS.GameBoard;
+using JungleMCTS.GameBoard.Controllers;
 using JungleMCTS.GameBoard.GameFields;
 using JungleMCTS.GamePiece;
 using JungleMCTS.GamePiece.Pieces;

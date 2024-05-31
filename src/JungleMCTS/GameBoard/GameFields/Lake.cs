@@ -7,6 +7,9 @@ namespace JungleMCTS.GameBoard.GameFields
     {
         public Lake() { }
 
+        public override object Clone() => new Lake();
+
+
         // Movement
         public override bool CanContain(Piece piece) => piece.CanMoveTo(this);
 

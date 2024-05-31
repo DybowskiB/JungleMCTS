@@ -2,12 +2,15 @@
 using JungleMCTS.Enums;
 using JungleMCTS.Exceptions;
 using JungleMCTS.GameBoard;
+using JungleMCTS.GameBoard.Controllers;
 
 namespace JungleMCTS.GamePiece.Pieces
 {
     public class Cheetah : Piece
     {
         public Cheetah(PlayerIdEnum playerIdEnum) : base(5, playerIdEnum) { }
+
+        public override object Clone() => new Cheetah(PlayerIdEnum);
 
 
         // Movement
@@ -18,7 +21,7 @@ namespace JungleMCTS.GamePiece.Pieces
         public override List<Position> GetPossiblePositions(Position currentPosition, Board board)
         {
             var possiblePositions = MoveController.GetDefaultPossiblePositions(currentPosition, board, this);
-            possiblePositions.AddRange(MoveController.GetPossibleHorizontalJumpPositions(currentPosition));
+            possiblePositions.AddRange(MoveController.GetPossibleHorizontalJumpPositions(currentPosition, board));
             return possiblePositions;
         }
 
