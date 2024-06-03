@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JungleMCTS.GameBoard;
+﻿using JungleMCTS.GameBoard;
 using JungleMCTS.GameBoard.GameFields;
 
 namespace JungleMCTS.UI
 {
     internal static class FieldUI
     {
+        public static readonly int FieldHeight = 80;
+        public static readonly int FieldWidth = 80;
+
         static public void DrawField(Bitmap bitmap, GameField? field, Position position)
         {
             Brush brush = Brushes.Black;
             Pen pen = new Pen(Brushes.Black);
-            int fieldHight = bitmap.Height / Board.BoardLength;
-            int fieldWidht = bitmap.Width / Board.BoardWidth;
             var positionOnScreen =
                 new Position(
-                    (Board.BoardLength - 1 - position.X) * fieldHight,
-                    position.Y * fieldWidht);
+                    (Board.BoardLength - 1 - position.X) * FieldHeight,
+                    position.Y * FieldWidth);
             if (field == null){
                 return;
             }
@@ -40,13 +35,13 @@ namespace JungleMCTS.UI
             g.FillRectangle(brush,
                 positionOnScreen.Y,
                 positionOnScreen.X,
-                fieldHight,
-                fieldWidht);
+                FieldHeight,
+                FieldWidth);
             g.DrawRectangle(pen,
                 positionOnScreen.Y,
                 positionOnScreen.X,
-                fieldHight,
-                fieldWidht);
+                FieldHeight,
+                FieldWidth);
         }
     }
 }

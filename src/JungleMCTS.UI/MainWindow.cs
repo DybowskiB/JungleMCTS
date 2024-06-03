@@ -10,13 +10,13 @@ namespace JungleMCTS
 {
     public partial class MainWindow : Form
     {
-        BoardUI boardUI = new BoardUI(new Board());
-        Player player1;
-        Player player2;
-        Piece?chosenPiece;
-        bool isWaitingForHumanMove = false;
+        private readonly BoardUI boardUI = new(new Board());
+        private Player player1;
+        private Player player2;
+        private Piece? chosenPiece;
+        private bool isWaitingForHumanMove = false;
+        private PlayerIdEnum whichPlayerToMove;
 
-        PlayerIdEnum whichPlayerToMove;
         public MainWindow()
         {
             InitializeComponent();
@@ -90,6 +90,7 @@ namespace JungleMCTS
                 if (chosenPiece != null && chosenPiece.PlayerIdEnum == whichPlayerToMove)
                 {
                     boardUI.DrawChoosenPiece(chosenPiece, pictureBox1);
+                    // possible moves can be drawn using chosenPiece.GetPossiblePositions
                 }
                 else
                 {

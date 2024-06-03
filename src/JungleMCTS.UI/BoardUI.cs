@@ -1,7 +1,6 @@
 ﻿using JungleMCTS.Enums;
 using JungleMCTS.GameBoard;
 using JungleMCTS.GamePiece;
-using System.Drawing;
 using System.Numerics;
 
 namespace JungleMCTS.UI
@@ -33,8 +32,8 @@ namespace JungleMCTS.UI
 
         public Piece? ChoosePiece(Vector2 PositionOnBoard)
         {
-            int x = (int)PositionOnBoard.X / 100;
-            int y = Board.BoardLength - 1 - ((int)PositionOnBoard.Y / 100);
+            int x = (int)PositionOnBoard.X / FieldUI.FieldHeight;
+            int y = Board.BoardLength - 1 - ((int)PositionOnBoard.Y / FieldUI.FieldWidth);
 
             return board.Pieces[y, x];
         }
@@ -64,8 +63,8 @@ namespace JungleMCTS.UI
 
         public bool MakeMove(Piece piece, Vector2 mousePosition, PlayerIdEnum playerId)
         {
-            int x = (int)mousePosition.X / 100;
-            int y = Board.BoardLength - 1 - ((int)mousePosition.Y / 100);
+            int x = (int)mousePosition.X / FieldUI.FieldHeight;
+            int y = Board.BoardLength - 1 - ((int)mousePosition.Y / FieldUI.FieldWidth);
             var positionAfter = new Position(y, x);
             var positionBefore = FindPiecePosition(piece);
 
