@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using JungleMCTS;
+﻿using JungleMCTS.Enums;
 using JungleMCTS.GameBoard;
+using JungleMCTS.GamePiece;
+using System.Drawing;
+using System.Numerics;
 
 namespace JungleMCTS.UI
 {
-    static class BoardUI
+    internal class BoardUI
     {
-        static public void DrawBoard(PictureBox pictureBox, Board board)
+        public Board board;
+        public BoardUI(Board board)
+        {
+            this.board = board;
+        }
+        public void DrawBoard(PictureBox pictureBox)
         {
             var bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
             pictureBox.Image = bitmap;
@@ -19,13 +21,64 @@ namespace JungleMCTS.UI
             {
                 for (int j = 0; j < Board.BoardWidth; j++)
                 {
-                    FieldUI.DrawField(bitmap, board.Fields[i, j], new Position(i,j));
-                    PieceUI.DrawPiece(bitmap, board.Pieces[i, j], new Position(i,j));
+                    var position = new Position(i, j);
+                    FieldUI.DrawField(bitmap, board.Fields[i, j], position);
+                    if(board.Pieces[i, j] != null)
+                    {
+                        new PieceUI(board.Pieces[i, j]!).DrawPiece(bitmap, position);
+                    }
                 }
             }
-            
         }
 
-   
+        public Piece? ChoosePiece(Vector2 PositionOnBoard)
+        {
+            int x = (int)PositionOnBoard.X / 100;
+            int y = Board.BoardLength - 1 - ((int)PositionOnBoard.Y / 100);
+
+            return board.Pieces[y, x];
+        }
+
+        public void DrawChoosenPiece(Piece chosenPiece, PictureBox pictureBox)
+        {
+            Position position = FindPiecePosition(chosenPiece);
+            Bitmap bitmap = (Bitmap)(pictureBox.Image);
+            new PieceUI(chosenPiece).DrawChosenPiece(bitmap, position);
+            pictureBox.Image = bitmap;
+        }
+
+        public Position FindPiecePosition(Piece piece)
+        {
+            for (int i = 0; i < Board.BoardLength; i++)
+            {
+                for (int j = 0; j < Board.BoardWidth; j++)
+                {
+                    if(piece == board.Pieces[i, j])
+                    {
+                        return new Position(i, j);
+                    }
+                }
+            }
+            return null;
+        }
+
+        public bool MakeMove(Piece piece, Vector2 mousePosition, PlayerIdEnum playerId)
+        {
+            int x = (int)mousePosition.X / 100;
+            int y = Board.BoardLength - 1 - ((int)mousePosition.Y / 100);
+            var positionAfter = new Position(y, x);
+            var positionBefore = FindPiecePosition(piece);
+
+            var possibilePostions = piece.GetPossiblePositions(positionBefore, board);
+            for (int i = 0; i < possibilePostions.Count; i++)
+            {
+                if (possibilePostions[i].Equals(positionAfter))
+                {
+                    board.Move(positionBefore, positionAfter);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

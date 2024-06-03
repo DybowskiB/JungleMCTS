@@ -1,6 +1,6 @@
 ﻿namespace JungleMCTS
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         ///  Required designer variable.
@@ -41,6 +41,7 @@
             pictureBox1.Size = new Size(700, 900);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.MouseClick += pictureBox1_MouseClick;
             // 
             // Form1
             // 

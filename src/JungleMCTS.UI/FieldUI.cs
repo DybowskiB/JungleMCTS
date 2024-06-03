@@ -17,6 +17,10 @@ namespace JungleMCTS.UI
             Pen pen = new Pen(Brushes.Black);
             int fieldHight = bitmap.Height / Board.BoardLength;
             int fieldWidht = bitmap.Width / Board.BoardWidth;
+            var positionOnScreen =
+                new Position(
+                    (Board.BoardLength - 1 - position.X) * fieldHight,
+                    position.Y * fieldWidht);
             if (field == null){
                 return;
             }
@@ -34,13 +38,13 @@ namespace JungleMCTS.UI
             }
             Graphics g = Graphics.FromImage(bitmap);
             g.FillRectangle(brush,
-                position.Y * fieldHight,
-                position.X * fieldWidht,
+                positionOnScreen.Y,
+                positionOnScreen.X,
                 fieldHight,
                 fieldWidht);
             g.DrawRectangle(pen,
-                position.Y * fieldHight,
-                position.X * fieldWidht,
+                positionOnScreen.Y,
+                positionOnScreen.X,
                 fieldHight,
                 fieldWidht);
         }

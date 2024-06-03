@@ -6,11 +6,11 @@ using JungleMCTS.GameBoard.Controllers;
 
 namespace JungleMCTS.GamePiece.Pieces
 {
-    public class Panther : Piece
+    public class Cheetah : Piece
     {
-        public Panther(PlayerIdEnum playerIdEnum) : base(5, playerIdEnum) { }
+        public Cheetah(PlayerIdEnum playerIdEnum) : base(5, playerIdEnum) { }
 
-        public override object Clone() => new Panther(PlayerIdEnum);
+        public override object Clone() => new Cheetah(PlayerIdEnum);
 
 
         // Movement

@@ -75,9 +75,9 @@ namespace JungleMCTS.GameBoard
             var positionKey = GetPositionKey(Pieces);
             UpdatePositions(positionKey);
             if (Pieces[0, 3] != null)
-                return GameResult.FirstPlayerWins;
-            if (Pieces[8, 3] != null)
                 return GameResult.SecondPlayerWins;
+            if (Pieces[8, 3] != null)
+                return GameResult.FirstPlayerWins;
             if (_movesWithoutCapturing >= _maxMoveWithoutCapturing)
                 return GameResult.DrawBecauseOfNotCapturing;
             if (_positionDictionary[positionKey] >= _maxPositionCount)
@@ -122,8 +122,8 @@ namespace JungleMCTS.GameBoard
             Pieces[8, 6] = new Tiger(PlayerIdEnum.SecondPlayer);
 
             // Cheetah positions
-            Pieces[2, 4] = new Panther(PlayerIdEnum.FirstPlayer);
-            Pieces[6, 2] = new Panther(PlayerIdEnum.SecondPlayer);
+            Pieces[2, 4] = new Cheetah(PlayerIdEnum.FirstPlayer);
+            Pieces[6, 2] = new Cheetah(PlayerIdEnum.SecondPlayer);
 
             // Wolf positions
             Pieces[2, 2] = new Wolf(PlayerIdEnum.FirstPlayer);
