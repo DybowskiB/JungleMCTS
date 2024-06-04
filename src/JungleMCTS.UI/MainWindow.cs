@@ -93,7 +93,7 @@ namespace JungleMCTS
                 if (chosenPiece != null && chosenPiece.PlayerIdEnum == whichPlayerToMove)
                 {
                     boardUI.DrawChoosenPiece(chosenPiece, pictureBox1);
-                    // possible moves can be drawn using chosenPiece.GetPossiblePositions
+                    boardUI.DrawPossibleMoves(chosenPiece, pictureBox1);
                 }
                 else
                 {

@@ -46,6 +46,31 @@ namespace JungleMCTS.UI
             pictureBox.Image = bitmap;
         }
 
+        public void DrawPossibleMoves(Piece piece, PictureBox pictureBox)
+        {
+            Position position = FindPiecePosition(piece);
+            var possiblePositions = piece.GetPossiblePositions(position, board);
+            Bitmap bitmap = (Bitmap)(pictureBox.Image);
+            Graphics g = Graphics.FromImage(bitmap);
+            Brush brush = Brushes.Gold;
+            foreach (var possiblePosition in possiblePositions)
+            {
+                var positionOnScreen =
+                    new Position(
+                        (Board.BoardLength - 1 - possiblePosition.X) * FieldUI.FieldHeight,
+                        possiblePosition.Y * FieldUI.FieldWidth);
+                g.FillEllipse(brush,
+                    positionOnScreen.Y + (int)(FieldUI.FieldHeight * 0.3),
+                    positionOnScreen.X + (int)(FieldUI.FieldWidth * 0.3),
+                    (int)(FieldUI.FieldHeight * 0.4) ,
+                    (int)(FieldUI.FieldWidth * 0.4));
+            }
+
+            new PieceUI(piece).DrawChosenPiece(bitmap, position);
+            pictureBox.Image = bitmap;
+        }
+
+
         public Position FindPiecePosition(Piece piece)
         {
             for (int i = 0; i < Board.BoardLength; i++)
