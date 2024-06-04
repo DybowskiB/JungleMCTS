@@ -37,5 +37,7 @@ namespace JungleMCTS.GamePiece
 
 
         public abstract int GetAttackerStrengthBasedOnRivals(Mouse attacker);
+
+        public abstract int GetAttackerStrengthBasedOnRivals(Elephant attacker);
     }
 }

@@ -35,5 +35,8 @@ namespace JungleMCTS.GamePiece.Pieces
 
         public override int GetAttackerStrengthBasedOnRivals(Mouse attacker)
             => attacker.DefaultStrength;
+
+        public override int GetAttackerStrengthBasedOnRivals(Elephant attacker)
+            => attacker.DefaultStrength;
     }
 }

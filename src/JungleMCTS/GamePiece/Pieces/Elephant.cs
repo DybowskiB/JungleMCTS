@@ -24,16 +24,19 @@ namespace JungleMCTS.GamePiece.Pieces
 
         // Capturing
         public override int GetAttackerStrength(DefaultField attackerField, Piece defender, GameField defenderField)
-            => DefaultStrength;
+            => defender.GetAttackerStrengthBasedOnRivals(this);
 
         public override int GetAttackerStrength(Lake attackerField, Piece defender, GameField defenderField)
              => throw new InvalidGameStateException("Cannot get cat strength in lake: cat cannot swim.");
 
         public override int GetAttackerStrength(Trap attackerField, Piece defender, GameField defenderField)
-             => PlayerIdEnum == attackerField.PlayerIdEnum ? DefaultStrength : 0;
+             => PlayerIdEnum == attackerField.PlayerIdEnum ? GetAttackerStrengthBasedOnRivals(this) : 0;
 
 
         public override int GetAttackerStrengthBasedOnRivals(Mouse attacker)
             => DefaultStrength; // Elephant can be captured by mouse
+
+        public override int GetAttackerStrengthBasedOnRivals(Elephant attacker)
+            => attacker.DefaultStrength;
     }
 }
