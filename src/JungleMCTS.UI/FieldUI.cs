@@ -5,8 +5,8 @@ namespace JungleMCTS.UI
 {
     internal static class FieldUI
     {
-        public static readonly int FieldHeight = 80;
-        public static readonly int FieldWidth = 80;
+        public static int FieldHeight;
+        public static int FieldWidth;
 
         static public void DrawField(Bitmap bitmap, GameField? field, Position position)
         {

@@ -4,6 +4,7 @@ using JungleMCTS.GamePiece;
 using JungleMCTS.Players;
 using JungleMCTS.Players.AutoPlayers.MctsPlayers;
 using JungleMCTS.UI;
+using System.Drawing;
 using System.Numerics;
 
 namespace JungleMCTS
@@ -20,6 +21,8 @@ namespace JungleMCTS
         public MainWindow()
         {
             InitializeComponent();
+            FieldUI.FieldHeight = pictureBox1.Height / Board.BoardLength;
+            FieldUI.FieldWidth = pictureBox1.Width / Board.BoardWidth;
             boardUI.DrawBoard(pictureBox1);
             var choosePlayerWindow = new ChoosePlayerWindow(Start);
             choosePlayerWindow.Show();

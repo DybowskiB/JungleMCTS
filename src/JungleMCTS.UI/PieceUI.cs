@@ -23,12 +23,10 @@ namespace JungleMCTS.UI
 
         public void DrawPiece(Bitmap bitmap, Position position)
         {
-            int fieldHight = bitmap.Height / Board.BoardLength;
-            int fieldWidht = bitmap.Width / Board.BoardWidth;
             var positionOnScreen = 
                 new Position(
-                    (Board.BoardLength - 1 - position.X) * fieldHight,
-                    position.Y * fieldWidht);
+                    (Board.BoardLength - 1 - position.X) * FieldUI.FieldHeight,
+                    position.Y * FieldUI.FieldWidth);
             Brush brush = Brushes.Black;
             Pen pen = new Pen(Brushes.Black, 5);
             if(piece.PlayerIdEnum == Enums.PlayerIdEnum.FirstPlayer)
@@ -75,15 +73,15 @@ namespace JungleMCTS.UI
 
             Graphics g = Graphics.FromImage(bitmap);
             g.FillEllipse(brush,
-                positionOnScreen.Y + (int)(fieldHight * 0.1),
-                positionOnScreen.X + (int)(fieldWidht * 0.1),
-                (int)(fieldHight * 0.8),
-                (int)(fieldWidht * 0.8));
+                positionOnScreen.Y + (int)(FieldUI.FieldHeight * 0.1),
+                positionOnScreen.X + (int)(FieldUI.FieldWidth * 0.1),
+                (int)(FieldUI.FieldHeight * 0.8),
+                (int)(FieldUI.FieldWidth * 0.8));
             g.DrawEllipse(pen,
-                positionOnScreen.Y + (int)(fieldHight * 0.1),
-                positionOnScreen.X + (int)(fieldWidht * 0.1),
-                (int)(fieldHight * 0.8),
-                (int)(fieldWidht * 0.8));
+                positionOnScreen.Y + (int)(FieldUI.FieldHeight * 0.1),
+                positionOnScreen.X + (int)(FieldUI.FieldWidth * 0.1),
+                (int)(FieldUI.FieldHeight * 0.8),
+                (int)(FieldUI.FieldWidth * 0.8));
 
             StringFormat format = new StringFormat();
             format.Alignment = StringAlignment.Center;
@@ -95,25 +93,23 @@ namespace JungleMCTS.UI
                 new RectangleF(
                     positionOnScreen.Y,
                     positionOnScreen.X,
-                    fieldHight,
-                    fieldWidht),
+                    FieldUI.FieldHeight,
+                    FieldUI.FieldWidth),
                 format);
         }
         public void DrawChosenPiece(Bitmap bitmap, Position position)
         {
             Graphics g = Graphics.FromImage(bitmap);
             Brush brush = Brushes.Gold;
-            int fieldHight = bitmap.Height / Board.BoardLength;
-            int fieldWidht = bitmap.Width / Board.BoardWidth;
             var positionOnScreen =
                 new Position(
-                    (Board.BoardLength - 1 - position.X) * fieldHight,
-                    position.Y * fieldWidht);
+                    (Board.BoardLength - 1 - position.X) * FieldUI.FieldHeight,
+                    position.Y * FieldUI.FieldWidth);
             g.FillEllipse(brush,
                 positionOnScreen.Y,
                 positionOnScreen.X,
-                fieldHight,
-                fieldWidht);
+                FieldUI.FieldHeight,
+                FieldUI.FieldWidth);
             
             DrawPiece(bitmap, position);
         }
