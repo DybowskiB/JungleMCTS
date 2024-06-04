@@ -38,7 +38,7 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Human", "MCTS UCT", "MCTS Beam", "MCTS Reflexive" });
+            comboBox1.Items.AddRange(new object[] { "Human", "MCTS UCT", "MCTS Beam", "MCTS Reflexive", "AlphaBeta" });
             comboBox1.Location = new Point(45, 153);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(182, 33);
@@ -48,7 +48,7 @@
             // comboBox2
             // 
             comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "Human", "MCTS UCT", "MCTS Beam", "MCTS Reflexive" });
+            comboBox2.Items.AddRange(new object[] { "Human", "MCTS UCT", "MCTS Beam", "MCTS Reflexive", "AlphaBeta" });
             comboBox2.Location = new Point(45, 60);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(182, 33);

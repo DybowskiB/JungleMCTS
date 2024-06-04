@@ -2,9 +2,9 @@ using JungleMCTS.Enums;
 using JungleMCTS.GameBoard;
 using JungleMCTS.GamePiece;
 using JungleMCTS.Players;
+using JungleMCTS.Players.AutoPlayers;
 using JungleMCTS.Players.AutoPlayers.MctsPlayers;
 using JungleMCTS.UI;
-using System.Drawing;
 using System.Numerics;
 
 namespace JungleMCTS
@@ -39,14 +39,22 @@ namespace JungleMCTS
             {
                 player1 = new HumanPlayer(PlayerIdEnum.FirstPlayer);
             }
+            else if(firstPlayer == "AlphaBeta")
+            {
+                player1 = new AlphaBetaPlayer(PlayerIdEnum.FirstPlayer, new TimeSpan());
+            }
 
             if (secondPlayer == "MCTS UCT")
             {
                 player2 = new MctsUctPlayer(PlayerIdEnum.SecondPlayer, new TimeSpan(1000));
             }
-            else
+            else if (secondPlayer == "Human")
             {
                 player2 = new HumanPlayer(PlayerIdEnum.SecondPlayer);
+            }
+            else if (secondPlayer == "AlphaBeta")
+            {
+                player2 = new AlphaBetaPlayer(PlayerIdEnum.SecondPlayer, new TimeSpan());
             }
             FirstPlayerMove();
         }
@@ -56,6 +64,13 @@ namespace JungleMCTS
             if (player1 is not HumanPlayer)
             {
                 ((AutoPlayer)player1).Move(boardUI.board);
+                boardUI.DrawBoard(pictureBox1);
+                Refresh();
+                if (CheckGameEnds())
+                {
+                    return;
+                }
+
                 SecondPlayerMove();
             }
             else
@@ -69,6 +84,12 @@ namespace JungleMCTS
             if (player2 is not HumanPlayer)
             {
                 ((AutoPlayer)player2).Move(boardUI.board);
+                boardUI.DrawBoard(pictureBox1);
+                Refresh();
+                if (CheckGameEnds())
+                {
+                    return;
+                }
                 FirstPlayerMove();
             }
             else
@@ -81,6 +102,7 @@ namespace JungleMCTS
         {
             whichPlayerToMove = playerId;
             isWaitingForHumanMove = true;
+            pictureBox1.Cursor = Cursors.Hand;
         }
 
 
@@ -106,7 +128,9 @@ namespace JungleMCTS
                 {
                     chosenPiece = null;
                     isWaitingForHumanMove= false;
+                    pictureBox1.Cursor = Cursors.WaitCursor;
                     boardUI.DrawBoard(pictureBox1);
+                    Refresh();
                     CheckGameEnds();
                     if (whichPlayerToMove == PlayerIdEnum.FirstPlayer)
                     {
@@ -126,24 +150,27 @@ namespace JungleMCTS
             }
         }
 
-        void CheckGameEnds()
+        bool CheckGameEnds()
         {
             var gameResult = boardUI.board.GetGameResult();
             if(gameResult == GameResult.None)
             {
-                return;
+                return false;
             }
             if(gameResult == GameResult.FirstPlayerWins)
             {
                 MessageBox.Show("The first player won");
+                return true;
             }
             else if(gameResult == GameResult.SecondPlayerWins)
             {
                 MessageBox.Show("The second player won");
+                return true;
             }
             else
             {
                 MessageBox.Show("The game ended in a draw");
+                return true;
             }
         }
     }

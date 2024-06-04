@@ -100,7 +100,7 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
             return board.GetGameResult();
         }
 
-        private static List<MctsAction> GetAvailableActions(Board board, PlayerIdEnum playerIdEnum)
+        public static List<MctsAction> GetAvailableActions(Board board, PlayerIdEnum playerIdEnum)
         {
             List<MctsAction> availableActions = [];
             for (int x = 0; x < Board.BoardLength; ++x)
