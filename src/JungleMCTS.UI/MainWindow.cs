@@ -70,7 +70,6 @@ namespace JungleMCTS
                 {
                     return;
                 }
-
                 SecondPlayerMove();
             }
             else
@@ -157,7 +156,7 @@ namespace JungleMCTS
             {
                 return false;
             }
-            if(gameResult == GameResult.FirstPlayerWins)
+            else if(gameResult == GameResult.FirstPlayerWins)
             {
                 MessageBox.Show("The first player won");
                 return true;

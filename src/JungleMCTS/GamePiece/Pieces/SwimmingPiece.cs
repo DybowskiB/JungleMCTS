@@ -16,7 +16,5 @@ namespace JungleMCTS.GamePiece.Pieces
         public void RestoreWaterTime() => timeInWater = 0;
 
         public bool IsDrowned() => timeInWater > maxTimeInWater;
-
-        public bool IsAboutToDrown() => timeInWater > maxTimeInWater - 1;
     }
 }
