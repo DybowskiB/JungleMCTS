@@ -30,15 +30,17 @@ namespace JungleMCTS.GameBoard
             UpdatePositions(GetPositionKey(Pieces));
         }
 
+        public Board(int movesWithoutCapturing)
+        {
+            _movesWithoutCapturing = movesWithoutCapturing;
+        }
+
 
         public object Clone()
         {
-            var clonedBoard = new Board
-            {
-                _movesWithoutCapturing = _movesWithoutCapturing
-            };
+            var clonedBoard = new Board(_movesWithoutCapturing);
 
-            // Cloning Pieces
+            // Cloning pieces
             for (int i = 0; i < BoardLength; i++)
             {
                 for (int j = 0; j < BoardWidth; j++)
@@ -71,16 +73,13 @@ namespace JungleMCTS.GameBoard
 
         public GameResult GetGameResult()
         {
-            RemovePiecesSwimmingLong();
-            var positionKey = GetPositionKey(Pieces);
-            UpdatePositions(positionKey);
             if (Pieces[0, 3] != null)
                 return GameResult.SecondPlayerWins;
             if (Pieces[8, 3] != null)
                 return GameResult.FirstPlayerWins;
             if (_movesWithoutCapturing >= _maxMoveWithoutCapturing)
                 return GameResult.DrawBecauseOfNotCapturing;
-            if (_positionDictionary[positionKey] >= _maxPositionCount)
+            if (_positionDictionary[GetPositionKey(Pieces)] >= _maxPositionCount)
                 return GameResult.DrawBecauseOfSamePositions;
             return GameResult.None;
         }
@@ -96,6 +95,9 @@ namespace JungleMCTS.GameBoard
                 _movesWithoutCapturing = 0;
             Pieces[to.X, to.Y] = Pieces[from.X, from.Y];
             Pieces[from.X, from.Y] = null;
+            // Update board state
+            RemovePiecesSwimmingLong();
+            UpdatePositions(GetPositionKey(Pieces));
         }
 
 

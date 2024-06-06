@@ -9,6 +9,10 @@ namespace JungleMCTS.GameBoard.Controllers
 
         public static List<Position> GetDefaultPossiblePositions(Position currentPosition, Board board, Piece piece)
         {
+            // If piece is in opponent cave, cannot move because game is over
+            if (currentPosition.Y == 3 && (currentPosition.X == 0 || currentPosition.X == 8))
+                return [];
+            // Otherwise get adjacent positions
             var defaultPossiblePositions = GetAdjacentPositions(currentPosition);
             List<Position> possiblePositions = [];
             foreach (var defaultPossiblePosition in defaultPossiblePositions)

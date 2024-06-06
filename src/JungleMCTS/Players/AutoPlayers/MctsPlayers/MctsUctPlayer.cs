@@ -1,4 +1,5 @@
 ﻿using JungleMCTS.Enums;
+using JungleMCTS.Exceptions;
 using JungleMCTS.GameBoard;
 using JungleMCTS.Players.AutoPlayers.MctsPlayers.MctsResources;
 
@@ -14,16 +15,17 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
 
         public override void Move(Board board)
         {
-            MctsUctNode root = new(null, board, GetAvailableActions(board, PlayerIdEnum), null);
+            var availableActions = GetAvailableActions(board, PlayerIdEnum);
+            if (availableActions.Count == 0) return;
+            MctsUctNode root = new(null, board, availableActions, null);
             MctsAction action = Search(root);
             board.Move(action.CurrentPosition, action.NewPosition);
         }
 
         private MctsAction Search(MctsUctNode root)
         {
-            DateTime startTime = DateTime.Now;
-            DateTime endTime = startTime + _maxMoveTime;
-            while(startTime < endTime)
+            DateTime endTime = DateTime.Now + _maxMoveTime;
+            while(DateTime.Now < endTime)
             {
                 MctsUctNode? node = root;
 
@@ -53,13 +55,16 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
                 while (node != null)
                 {
                     node.Visits++;
-                    node.Wins += result;
+                    node.Points += result;
                     node = node.Parent;
                 }
             }
 
-            return root.Children.OrderByDescending(c => c.Visits).First().Action!;
+            var childrenWithActions = root.Children.Where(c => c.Action is not null).ToList();
+            return childrenWithActions.OrderByDescending(c => c.Value).First().Action 
+                ?? throw new InvalidGameStateException("Cannot get any action.");
         }
+
 
         private double Simulate(MctsUctNode node)
         {

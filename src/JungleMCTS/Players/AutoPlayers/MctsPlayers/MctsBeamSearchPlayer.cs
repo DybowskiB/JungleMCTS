@@ -1,4 +1,5 @@
 ﻿using JungleMCTS.Enums;
+using JungleMCTS.Exceptions;
 using JungleMCTS.GameBoard;
 using JungleMCTS.Players.AutoPlayers.MctsPlayers.MctsResources;
 
@@ -8,44 +9,45 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
     {
         private readonly double _c = Math.Sqrt(2);
         private readonly Random _random = new();
-        private readonly int _beamWidth;
-        private readonly Dictionary<int, int> _beamWidthDictionary = [];
+        private readonly int _beamWidth = 100;
 
-        public MctsBeamSearchPlayer(PlayerIdEnum playerIdEnum, TimeSpan maxMoveTime, int beamWidth)
-            : base(playerIdEnum, maxMoveTime) 
-        { 
-            _beamWidth = beamWidth;
-        }
+        public MctsBeamSearchPlayer(PlayerIdEnum playerIdEnum, TimeSpan maxMoveTime)
+            : base(playerIdEnum, maxMoveTime) { }
 
         public override void Move(Board board)
         {
-            MctsUctNode root = new(null, board, GetAvailableActions(board, PlayerIdEnum), null);
+            var availableActions = GetAvailableActions(board, PlayerIdEnum);
+            if (availableActions.Count == 0) return;
+            MctsUctNode root = new(null, board, availableActions, null);
             // Initialize dictionary
-            _beamWidthDictionary.Add(0, 1);
-            _beamWidthDictionary.Add(1, 0);
-            MctsAction action = Search(root);
+            Dictionary<int, int> beamWidthDictionary = [];
+            beamWidthDictionary.Add(0, 1);
+            beamWidthDictionary.Add(1, 0);
+            MctsAction action = Search(root, beamWidthDictionary);
             board.Move(action.CurrentPosition, action.NewPosition);
         }
 
-        private MctsAction Search(MctsUctNode root)
+        private MctsAction Search(MctsUctNode root, Dictionary<int, int> beamWidthDictionary)
         {
-            DateTime startTime = DateTime.Now;
-            DateTime endTime = startTime + _maxMoveTime;
-            while (startTime < endTime)
+            DateTime endTime = DateTime.Now + _maxMoveTime;
+            while (DateTime.Now < endTime)
             {
                 MctsUctNode? node = root;
                 int nodeChildLevel = 1;
-                int numberOfNodesOnChildLevel = _beamWidthDictionary[1];
+                int numberOfNodesOnChildLevel = beamWidthDictionary[1];
 
                 // Selection
-                while ((node.UntriedActions.Count == 0 || numberOfNodesOnChildLevel > _beamWidth) 
-                    && node.Children.Count != 0)
+                while ((node.UntriedActions.Count == 0 || numberOfNodesOnChildLevel > _beamWidth) && node.Children.Count != 0)
                 {
                     node = node.SelectChild(_c);
                     ++nodeChildLevel;
-                    if (_beamWidthDictionary.TryGetValue(nodeChildLevel, out var numberOfNodes))
+                    if (beamWidthDictionary.TryGetValue(nodeChildLevel, out var numberOfNodes))
                     {
                         numberOfNodesOnChildLevel = numberOfNodes;
+                    }
+                    else
+                    {
+                        numberOfNodesOnChildLevel = 0;
                     }
                 }
 
@@ -59,9 +61,13 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
                     clonedBoard.Move(action.CurrentPosition, action.NewPosition);
                     MctsUctNode child = new(node, clonedBoard, GetAvailableActions(clonedBoard, PlayerIdEnum), action);
                     node.AddChild(child);
-                    if (_beamWidthDictionary.TryGetValue(nodeChildLevel, out int value))
+                    if (beamWidthDictionary.TryGetValue(nodeChildLevel, out int value))
                     {
-                        _beamWidthDictionary[nodeChildLevel] = ++value;
+                        beamWidthDictionary[nodeChildLevel] = ++value;
+                    }
+                    else
+                    {
+                        beamWidthDictionary.Add(nodeChildLevel, 1);
                     }
                     node = child;
                 }
@@ -73,12 +79,14 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
                 while (node != null)
                 {
                     node.Visits++;
-                    node.Wins += result;
+                    node.Points += result;
                     node = node.Parent;
                 }
             }
 
-            return root.Children.OrderByDescending(c => c.Visits).First().Action!;
+            var childrenWithActions = root.Children.Where(c => c.Action is not null).ToList();
+            return childrenWithActions.OrderByDescending(c => c.Value).First().Action
+                ?? throw new InvalidGameStateException("Cannot get any action.");
         }
 
         private double Simulate(MctsUctNode node)

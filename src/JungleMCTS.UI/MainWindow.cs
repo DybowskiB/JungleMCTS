@@ -33,7 +33,11 @@ namespace JungleMCTS
         {
             if (firstPlayer  == "MCTS UCT")
             {
-                player1 = new MctsUctPlayer(PlayerIdEnum.FirstPlayer, new TimeSpan(1000));
+                player1 = new MctsUctPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(10));
+            }
+            else if (firstPlayer == "MCTS Beam")
+            {
+                player1 = new MctsBeamSearchPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(10));
             }
             else if(firstPlayer == "Human")
             {
@@ -46,7 +50,11 @@ namespace JungleMCTS
 
             if (secondPlayer == "MCTS UCT")
             {
-                player2 = new MctsUctPlayer(PlayerIdEnum.SecondPlayer, new TimeSpan(1000));
+                player2 = new MctsUctPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(10));
+            }
+            else if (secondPlayer == "MCTS Beam")
+            {
+                player2 = new MctsBeamSearchPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(10));
             }
             else if (secondPlayer == "Human")
             {

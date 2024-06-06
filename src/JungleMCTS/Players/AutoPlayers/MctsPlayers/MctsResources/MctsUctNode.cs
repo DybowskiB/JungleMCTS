@@ -9,7 +9,7 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers.MctsResources
 
         public List<MctsUctNode> Children { get; set; } = [];
 
-        public double Wins { get; set; } = 0;
+        public double Points { get; set; } = 0;
 
         public double Visits { get; set; } = 0;
 
@@ -18,6 +18,8 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers.MctsResources
         public List<MctsAction> UntriedActions { get; set; }
 
         public MctsAction? Action { get; set; }
+
+        public double Value => Visits > 0 ? Points / Visits : -1;
 
         public MctsUctNode(MctsUctNode? parent, Board board, List<MctsAction> untriedActions, MctsAction? action = null)
         {
@@ -30,7 +32,7 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers.MctsResources
         public MctsUctNode SelectChild(double c)
         {
             return Children.OrderByDescending(child =>
-                child.Wins / (child.Visits + 1) +
+                child.Points / (child.Visits + 1) +
                 c * Math.Sqrt(2 * Math.Log(Visits + 1) / (child.Visits + 1))
             ).First();
         }
