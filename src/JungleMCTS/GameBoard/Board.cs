@@ -4,6 +4,7 @@ using JungleMCTS.GamePiece;
 using JungleMCTS.GamePiece.Pieces;
 using JungleMCTS.Exceptions;
 using System.Text;
+using JungleMCTS.Players.AutoPlayers.MctsPlayers;
 
 namespace JungleMCTS.GameBoard
 {
@@ -73,9 +74,9 @@ namespace JungleMCTS.GameBoard
 
         public GameResult GetGameResult()
         {
-            if (Pieces[0, 3] != null)
+            if (Pieces[0, 3] != null || MctsUctPlayer.GetAvailableActions(this, PlayerIdEnum.FirstPlayer).Count == 0)
                 return GameResult.SecondPlayerWins;
-            if (Pieces[8, 3] != null)
+            if (Pieces[8, 3] != null || MctsUctPlayer.GetAvailableActions(this, PlayerIdEnum.SecondPlayer).Count == 0)
                 return GameResult.FirstPlayerWins;
             if (_movesWithoutCapturing >= _maxMoveWithoutCapturing)
                 return GameResult.DrawBecauseOfNotCapturing;

@@ -12,7 +12,7 @@ namespace JungleMCTS.Players.AutoPlayers
 
         public override void Move(Board board)
         { 
-            var action = AlphaBeta(PlayerIdEnum, board, 4, double.MinValue, double.MaxValue, true).Item2;
+            var action = AlphaBeta(PlayerIdEnum, board, 5, double.MinValue, double.MaxValue, true).Item2;
             if (action == null)
             {
                 throw new Exception("not found any move");
@@ -21,10 +21,6 @@ namespace JungleMCTS.Players.AutoPlayers
         }
         (double, MctsAction?, int) AlphaBeta(PlayerIdEnum playerId, Board board, int deepLevel, double alfa, double beta, bool isFirstLevel )
         {
-            if (deepLevel == 0)
-            {
-                return (EvaluateBoard(board), null, 100);
-            }
             if(!isFirstLevel)
             {
                 var result = board.GetGameResult();
@@ -32,6 +28,10 @@ namespace JungleMCTS.Players.AutoPlayers
                 {
                     return (getGameResultEvalution(result), null, 0);
                 }
+            }
+            if (deepLevel == 0)
+            {
+                return (EvaluateBoard(board), null, 100);
             }
             MctsAction? chosenMove = null;
             int m = 100000; 

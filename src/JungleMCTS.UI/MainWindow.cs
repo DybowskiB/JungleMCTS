@@ -31,13 +31,18 @@ namespace JungleMCTS
 
         public void Start(string firstPlayer, string secondPlayer)
         {
+            int secondsForMove = 3;
             if (firstPlayer  == "MCTS UCT")
             {
-                player1 = new MctsUctPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(10));
+                player1 = new MctsUctPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(secondsForMove));
             }
             else if (firstPlayer == "MCTS Beam")
             {
-                player1 = new MctsBeamSearchPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(10));
+                player1 = new MctsBeamSearchPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(secondsForMove));
+            }
+            else if (firstPlayer == "MCTS Reflexive")
+            {
+                player1 = new ReflexiveMctsPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(secondsForMove));
             }
             else if(firstPlayer == "Human")
             {
@@ -50,11 +55,15 @@ namespace JungleMCTS
 
             if (secondPlayer == "MCTS UCT")
             {
-                player2 = new MctsUctPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(10));
+                player2 = new MctsUctPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(secondsForMove));
             }
             else if (secondPlayer == "MCTS Beam")
             {
-                player2 = new MctsBeamSearchPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(10));
+                player2 = new MctsBeamSearchPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(secondsForMove));
+            }
+            else if (secondPlayer == "MCTS Reflexive")
+            {
+                player2 = new ReflexiveMctsPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(secondsForMove));
             }
             else if (secondPlayer == "Human")
             {
@@ -76,6 +85,7 @@ namespace JungleMCTS
                 Refresh();
                 if (CheckGameEnds())
                 {
+                    isWaitingForHumanMove = false;
                     return;
                 }
                 SecondPlayerMove();
@@ -95,6 +105,7 @@ namespace JungleMCTS
                 Refresh();
                 if (CheckGameEnds())
                 {
+                    isWaitingForHumanMove = false;
                     return;
                 }
                 FirstPlayerMove();
@@ -138,7 +149,11 @@ namespace JungleMCTS
                     pictureBox1.Cursor = Cursors.WaitCursor;
                     boardUI.DrawBoard(pictureBox1);
                     Refresh();
-                    CheckGameEnds();
+                    if(CheckGameEnds())
+                    {
+                        pictureBox1.Cursor= Cursors.Default;
+                        return;
+                    }
                     if (whichPlayerToMove == PlayerIdEnum.FirstPlayer)
                     {
                         SecondPlayerMove();
