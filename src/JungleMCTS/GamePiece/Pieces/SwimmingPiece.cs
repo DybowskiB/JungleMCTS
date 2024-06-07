@@ -4,17 +4,17 @@ namespace JungleMCTS.GamePiece.Pieces
 {
     public abstract class SwimmingPiece : Piece
     {
-        private const int maxTimeInWater = 3;
+        public static readonly int MaxTimeInWater = 3;
 
-        private int timeInWater = 0;
+        public int TimeInWater { get; set; } = 0;
 
         protected SwimmingPiece(int initialStrength, PlayerIdEnum playerIdEnum)
             : base(initialStrength, playerIdEnum) { }
 
-        public void ExtendWaterTime() => ++timeInWater;
+        public void ExtendWaterTime() => ++TimeInWater;
 
-        public void RestoreWaterTime() => timeInWater = 0;
+        public void RestoreWaterTime() => TimeInWater = 0;
 
-        public bool IsDrowned() => timeInWater > maxTimeInWater;
+        public bool IsDrowned() => TimeInWater >= MaxTimeInWater;
     }
 }

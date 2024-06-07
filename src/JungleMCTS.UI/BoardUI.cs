@@ -98,7 +98,7 @@ namespace JungleMCTS.UI
             {
                 if (possibilePostions[i].Equals(positionAfter))
                 {
-                    board.Move(positionBefore, positionAfter);
+                    board.Move(positionBefore, positionAfter, playerId);
                     return true;
                 }
             }

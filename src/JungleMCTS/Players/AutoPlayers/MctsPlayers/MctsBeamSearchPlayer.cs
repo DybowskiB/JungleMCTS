@@ -1,6 +1,7 @@
 ﻿using JungleMCTS.Enums;
 using JungleMCTS.Exceptions;
 using JungleMCTS.GameBoard;
+using JungleMCTS.GamePiece.Pieces;
 using JungleMCTS.Players.AutoPlayers.MctsPlayers.MctsResources;
 
 namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
@@ -9,10 +10,21 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
     {
         private readonly double _c = Math.Sqrt(2);
         private readonly Random _random = new();
+        private readonly double _captureReward = 0.5;
+        private readonly double _capturePenalty = 0.3;
+        private readonly double _winReward = 1;
+        private readonly double _drawPenalty = 0.5;
+        private readonly double _lossPenalty = 1;
         private readonly int _beamWidth = 100;
 
-        public MctsBeamSearchPlayer(PlayerIdEnum playerIdEnum, TimeSpan maxMoveTime)
-            : base(playerIdEnum, maxMoveTime) { }
+        public MctsBeamSearchPlayer(PlayerIdEnum playerIdEnum, TimeSpan maxMoveTime, int? seed = null)
+            : base(playerIdEnum, maxMoveTime)
+        {
+            if (seed is not null)
+            {
+                _random = new((int)seed);
+            }
+        }
 
         public override void Move(Board board)
         {
@@ -24,7 +36,7 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
             beamWidthDictionary.Add(0, 1);
             beamWidthDictionary.Add(1, 0);
             MctsAction action = Search(root, beamWidthDictionary);
-            board.Move(action.CurrentPosition, action.NewPosition);
+            board.Move(action.CurrentPosition, action.NewPosition, PlayerIdEnum);
         }
 
         private MctsAction Search(MctsUctNode root, Dictionary<int, int> beamWidthDictionary)
@@ -58,7 +70,7 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
                     node.UntriedActions.Remove(action);
                     Board clonedBoard = node.Board.Clone() as Board
                         ?? throw new NullReferenceException("Cannot create board copy.");
-                    clonedBoard.Move(action.CurrentPosition, action.NewPosition);
+                    clonedBoard.Move(action.CurrentPosition, action.NewPosition, PlayerIdEnum);
                     MctsUctNode child = new(node, clonedBoard, GetAvailableActions(clonedBoard, PlayerIdEnum), action);
                     node.AddChild(child);
                     if (beamWidthDictionary.TryGetValue(nodeChildLevel, out int value))
@@ -91,7 +103,7 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
 
         private double Simulate(MctsUctNode node)
         {
-            // Run simulation
+            double result = 0;
             Board board = (Board)node.Board.Clone();
             bool isFirstPlayer = PlayerIdEnum == PlayerIdEnum.FirstPlayer;
             // Opponent starts
@@ -99,7 +111,7 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
             var gameResult = board.GetGameResult();
             while (gameResult == GameResult.None)
             {
-                gameResult = SimulateMove(board, currentPlayer);
+                gameResult = SimulateMove(board, currentPlayer, ref result);
                 currentPlayer = (PlayerIdEnum)((int)currentPlayer ^ 1);
             }
 
@@ -108,22 +120,36 @@ namespace JungleMCTS.Players.AutoPlayers.MctsPlayers
             bool isSecondPlayerWinner = gameResult == GameResult.SecondPlayerWins;
             if ((isFirstPlayerWinner && isFirstPlayer) || (isSecondPlayerWinner && !isFirstPlayer))
             {
-                return 1;
+                return result + _winReward;
             }
             if ((isFirstPlayerWinner && !isFirstPlayer) || (isSecondPlayerWinner && isFirstPlayer))
             {
-                return -1;
+                return result - _lossPenalty;
             }
-            return 0;
+            return result - _drawPenalty;
         }
 
-        private GameResult SimulateMove(Board board, PlayerIdEnum playerId)
+        private GameResult SimulateMove(Board board, PlayerIdEnum playerId, ref double result)
         {
             List<MctsAction> possibleActions = GetAvailableActions(board, playerId);
-            if (possibleActions.Count == 0)
-                return GameResult.Draw;
             MctsAction action = possibleActions[_random.Next(possibleActions.Count)];
-            board.Move(action.CurrentPosition, action.NewPosition);
+            if (board.Pieces[action.NewPosition.X, action.NewPosition.Y] is not null)
+            {
+                result = playerId == PlayerIdEnum ? result + _captureReward : result - _capturePenalty;
+            }
+            if (playerId == PlayerIdEnum)
+            {
+                foreach (var piece in board.Pieces)
+                {
+                    if (piece is null || piece is not SwimmingPiece) continue;
+                    SwimmingPiece? swimmingPiece = piece as SwimmingPiece;
+                    if (swimmingPiece is not null && swimmingPiece.TimeInWater >= SwimmingPiece.MaxTimeInWater)
+                    {
+                        result -= _capturePenalty;
+                    }
+                }
+            }
+            board.Move(action.CurrentPosition, action.NewPosition, playerId);
             return board.GetGameResult();
         }
 

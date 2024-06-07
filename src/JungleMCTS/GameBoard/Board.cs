@@ -9,9 +9,9 @@ namespace JungleMCTS.GameBoard
 {
     public class Board : ICloneable
     {
-        private readonly int _maxMoveWithoutCapturing = 30;
+        private readonly int _maxMoveWithoutCapturing = 60;
         private readonly int _maxPositionCount = 3;
-        private readonly Dictionary<string, int> _positionDictionary = new();
+        private readonly Dictionary<string, int> _positionDictionary = [];
         private int _movesWithoutCapturing = 0;
 
         public static int BoardLength { get; } = 9;
@@ -71,11 +71,12 @@ namespace JungleMCTS.GameBoard
             return clonedBoard;
         }
 
+
         public GameResult GetGameResult()
         {
-            if (Pieces[0, 3] != null)
+            if (Pieces[0, 3] != null || !CanMove(PlayerIdEnum.FirstPlayer))
                 return GameResult.SecondPlayerWins;
-            if (Pieces[8, 3] != null)
+            if (Pieces[8, 3] != null || !CanMove(PlayerIdEnum.SecondPlayer))
                 return GameResult.FirstPlayerWins;
             if (_movesWithoutCapturing >= _maxMoveWithoutCapturing)
                 return GameResult.DrawBecauseOfNotCapturing;
@@ -85,7 +86,7 @@ namespace JungleMCTS.GameBoard
         }
 
 
-        public void Move(Position from, Position to)
+        public void Move(Position from, Position to, PlayerIdEnum playerIdEnum)
         {
             if (Pieces[from.X, from.Y] == null)
                 throw new InvalidGameStateException("Cannot move from empty field.");
@@ -96,7 +97,7 @@ namespace JungleMCTS.GameBoard
             Pieces[to.X, to.Y] = Pieces[from.X, from.Y];
             Pieces[from.X, from.Y] = null;
             // Update board state
-            RemovePiecesSwimmingLong();
+            RemovePiecesSwimmingLong(playerIdEnum);
             UpdatePositions(GetPositionKey(Pieces));
         }
 
@@ -184,7 +185,7 @@ namespace JungleMCTS.GameBoard
         }
 
 
-        private void RemovePiecesSwimmingLong()
+        private void RemovePiecesSwimmingLong(PlayerIdEnum playerIdEnum)
         {
             List<int> lakeXIndexes = [3, 4, 5];
             List<int> lakeYIndexes = [1, 2, 4, 5];
@@ -192,7 +193,9 @@ namespace JungleMCTS.GameBoard
             {
                 for(int y = 0; y < BoardWidth; ++y)
                 {
-                    if (Pieces[x, y] is not SwimmingPiece)
+                    if (Pieces[x, y] is null || Pieces[x, y] is not SwimmingPiece)
+                        continue;
+                    if (Pieces[x, y]!.PlayerIdEnum != playerIdEnum)
                         continue;
                     var swimmingPiece = Pieces[x, y] as SwimmingPiece;
                     if (lakeXIndexes.Contains(x) && lakeYIndexes.Contains(y))
@@ -240,6 +243,26 @@ namespace JungleMCTS.GameBoard
                 }
             }
             return positionsKey.ToString();
+        }
+
+        private bool CanMove(PlayerIdEnum playerIdEnum)
+        {
+            for (int x = 0; x < BoardLength; ++x)
+            {
+                for (int y = 0; y < BoardWidth; ++y)
+                {
+                    var piece = Pieces[x, y];
+                    if (piece is null || piece.PlayerIdEnum != playerIdEnum)
+                        continue;
+                    Position currentPosition = new(x, y);
+                    var possiblePositions = piece.GetPossiblePositions(currentPosition, this);
+                    if (possiblePositions.Count != 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
