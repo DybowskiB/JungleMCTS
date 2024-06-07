@@ -17,7 +17,7 @@ namespace JungleMCTS.Players.AutoPlayers
             {
                 throw new Exception("not found any move");
             }
-            board.Move(action.CurrentPosition, action.NewPosition);
+            board.Move(action.CurrentPosition, action.NewPosition, PlayerIdEnum);
         }
         (double, MctsAction?, int) AlphaBeta(PlayerIdEnum playerId, Board board, int deepLevel, double alfa, double beta, bool isFirstLevel )
         {
@@ -40,7 +40,7 @@ namespace JungleMCTS.Players.AutoPlayers
                 foreach (var move in getPossibleMoves(board, playerId))
                 {
                     var newBoard = (Board)board.Clone();
-                    newBoard.Move(move.CurrentPosition, move.NewPosition);
+                    newBoard.Move(move.CurrentPosition, move.NewPosition, playerId);
                     var resultAlphaBeta = AlphaBeta(PlayerIdEnum.FirstPlayer, newBoard, deepLevel - 1, alfa, beta, false);
                     var temp = resultAlphaBeta.Item1;
                     var tempM = resultAlphaBeta.Item3 + 1;
@@ -62,7 +62,7 @@ namespace JungleMCTS.Players.AutoPlayers
                 foreach(var move in getPossibleMoves(board, playerId))
                 {
                     var newBoard = (Board)board.Clone();
-                    newBoard.Move(move.CurrentPosition, move.NewPosition);
+                    newBoard.Move(move.CurrentPosition, move.NewPosition, playerId);
 
                     var resultAlphaBeta = AlphaBeta(PlayerIdEnum.SecondPlayer, newBoard, deepLevel - 1, alfa, beta, false);
                     var temp = resultAlphaBeta.Item1;
