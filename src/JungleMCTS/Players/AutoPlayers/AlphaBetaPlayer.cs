@@ -10,16 +10,29 @@ namespace JungleMCTS.Players.AutoPlayers
         public AlphaBetaPlayer(PlayerIdEnum playerIdEnum, TimeSpan maxMoveTime)
             : base(playerIdEnum, maxMoveTime) { }
 
+
         public override void Move(Board board)
-        { 
-            var action = AlphaBeta(PlayerIdEnum, board, 5, double.MinValue, double.MaxValue, true).Item2;
+        {
+            DateTime endTime = DateTime.Now + _maxMoveTime;
+            int i = 1;
+            MctsAction? action = null;
+            while (DateTime.Now < endTime)
+            {
+                var tempAction = AlphaBeta(PlayerIdEnum, board, i, double.MinValue, double.MaxValue, true, endTime).Item2;
+                if(DateTime.Now >= endTime)
+                {
+                    action = tempAction;
+                }
+                i++;
+            }
             if (action == null)
             {
                 throw new Exception("not found any move");
             }
             board.Move(action.CurrentPosition, action.NewPosition, PlayerIdEnum);
         }
-        (double, MctsAction?, int) AlphaBeta(PlayerIdEnum playerId, Board board, int deepLevel, double alfa, double beta, bool isFirstLevel )
+        (double, MctsAction?, int) AlphaBeta(PlayerIdEnum playerId,
+            Board board, int deepLevel, double alfa, double beta, bool isFirstLevel, DateTime endTime)
         {
             if(!isFirstLevel)
             {
@@ -41,7 +54,7 @@ namespace JungleMCTS.Players.AutoPlayers
                 {
                     var newBoard = (Board)board.Clone();
                     newBoard.Move(move.CurrentPosition, move.NewPosition, playerId);
-                    var resultAlphaBeta = AlphaBeta(PlayerIdEnum.FirstPlayer, newBoard, deepLevel - 1, alfa, beta, false);
+                    var resultAlphaBeta = AlphaBeta(PlayerIdEnum.FirstPlayer, newBoard, deepLevel - 1, alfa, beta, false, endTime);
                     var temp = resultAlphaBeta.Item1;
                     var tempM = resultAlphaBeta.Item3 + 1;
                     if (temp < beta|| (temp == beta && tempM < m))
@@ -54,6 +67,10 @@ namespace JungleMCTS.Players.AutoPlayers
                     {
                         break;
                     }
+                    if (endTime < DateTime.Now)
+                    {
+                        return (beta, chosenMove, m);
+                    }
                 }
                 return (beta, chosenMove, m);
             }
@@ -64,7 +81,7 @@ namespace JungleMCTS.Players.AutoPlayers
                     var newBoard = (Board)board.Clone();
                     newBoard.Move(move.CurrentPosition, move.NewPosition, playerId);
 
-                    var resultAlphaBeta = AlphaBeta(PlayerIdEnum.SecondPlayer, newBoard, deepLevel - 1, alfa, beta, false);
+                    var resultAlphaBeta = AlphaBeta(PlayerIdEnum.SecondPlayer, newBoard, deepLevel - 1, alfa, beta, false, endTime);
                     var temp = resultAlphaBeta.Item1;
                     var tempM = resultAlphaBeta.Item3 + 1;
                     if (temp > alfa || (temp == alfa && tempM < m))
@@ -76,6 +93,10 @@ namespace JungleMCTS.Players.AutoPlayers
                     if (alfa >= beta)
                     {
                         break;
+                    }
+                    if (endTime < DateTime.Now)
+                    {
+                        return (alfa, chosenMove, m);
                     }
                 }
                 return (alfa, chosenMove, m);

@@ -71,7 +71,7 @@ namespace JungleMCTS
             }
             else if (secondPlayer == "AlphaBeta")
             {
-                player2 = new AlphaBetaPlayer(PlayerIdEnum.SecondPlayer, new TimeSpan());
+                player2 = new AlphaBetaPlayer(PlayerIdEnum.SecondPlayer, TimeSpan.FromSeconds(secondsForMove));
             }
             FirstPlayerMove();
         }
