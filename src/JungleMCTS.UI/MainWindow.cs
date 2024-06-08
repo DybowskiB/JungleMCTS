@@ -14,6 +14,7 @@ namespace JungleMCTS
         private readonly BoardUI boardUI = new(new Board());
         private Player player1;
         private Player player2;
+        private int secondsForMove;
         private Piece? chosenPiece;
         private bool isWaitingForHumanMove = false;
         private PlayerIdEnum whichPlayerToMove;
@@ -24,14 +25,13 @@ namespace JungleMCTS
             FieldUI.FieldHeight = pictureBox1.Height / Board.BoardLength;
             FieldUI.FieldWidth = pictureBox1.Width / Board.BoardWidth;
             boardUI.DrawBoard(pictureBox1);
-            var choosePlayerWindow = new ChoosePlayerWindow(Start);
-            choosePlayerWindow.Show();
+            var chooseTimeWindow = new ChooseTimeForAutoplayer(ChooseTime);
+            chooseTimeWindow.Show();
         }
 
 
         public void Start(string firstPlayer, string secondPlayer)
         {
-            int secondsForMove = 3;
             if (firstPlayer  == "MCTS UCT")
             {
                 player1 = new MctsUctPlayer(PlayerIdEnum.FirstPlayer, TimeSpan.FromSeconds(secondsForMove));
@@ -74,6 +74,13 @@ namespace JungleMCTS
                 player2 = new AlphaBetaPlayer(PlayerIdEnum.SecondPlayer, new TimeSpan());
             }
             FirstPlayerMove();
+        }
+
+        void ChooseTime(int time)
+        {
+            secondsForMove = time;
+            var choosePlayerWindow = new ChoosePlayerWindow(Start);
+            choosePlayerWindow.Show();
         }
 
         void FirstPlayerMove()
