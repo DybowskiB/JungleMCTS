@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4241E163-E40
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AF9AFBCD-0723-41D4-B8BD-63D2F04A79CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JungleMctsDuels.Tests", "tests\JungleMctsDuels.Tests\JungleMctsDuels.Tests.csproj", "{C15F32DC-7089-4149-82A4-0EDE7A311C72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{E7F5B7E9-579E-4D1F-8A80-A069F2AD2ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7F5B7E9-579E-4D1F-8A80-A069F2AD2ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7F5B7E9-579E-4D1F-8A80-A069F2AD2ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C15F32DC-7089-4149-82A4-0EDE7A311C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C15F32DC-7089-4149-82A4-0EDE7A311C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C15F32DC-7089-4149-82A4-0EDE7A311C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C15F32DC-7089-4149-82A4-0EDE7A311C72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{76E7D28D-0270-4626-84B7-E62CFF75D165} = {4241E163-E40E-43BF-A469-EF2DD2AA97A3}
 		{1554D8F5-9C9F-47E9-B334-3AB6D1BD2590} = {4241E163-E40E-43BF-A469-EF2DD2AA97A3}
 		{E7F5B7E9-579E-4D1F-8A80-A069F2AD2ED8} = {AF9AFBCD-0723-41D4-B8BD-63D2F04A79CF}
+		{C15F32DC-7089-4149-82A4-0EDE7A311C72} = {AF9AFBCD-0723-41D4-B8BD-63D2F04A79CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0299CC1A-B68E-4A20-A3D4-2D641279F785}
